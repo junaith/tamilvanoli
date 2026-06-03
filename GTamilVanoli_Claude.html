@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a4a1a">
+<meta name="description" content="தமிழ் வானொலி — உலகளாவிய தமிழ் வானொலி அகராதி">
+<title>தமிழ் வானொலி — Tamil Radio Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ui-bg:rgba(6,20,6,0.85);
+  --ui-surface:rgba(12,35,10,0.92);
+  --ui-card:rgba(10,28,8,0.90);
+  --ui-border:rgba(80,180,40,0.16);
+  --ui-border-h:rgba(80,180,40,0.38);
+  --text-p:#edffd8;--text-s:#8ecb5e;--text-m:#4e7834;
+  --acc-g:#6dcc30;--acc-y:#f5c518;--acc-r:#ff6060;--acc-t:#2de8c0;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#050f03;color:var(--text-p);min-height:100vh;overflow-x:hidden}
+
+.hero-scene{width:100%;height:300px;position:relative;overflow:hidden;flex-shrink:0;display:block}
+.hero-scene svg{width:100%;height:100%;display:block}
+
+.topbar{background:var(--ui-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--ui-border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand-icon{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#3a8c10,#78cc20);display:flex;align-items:center;justify-content:center;box-shadow:0 0 18px rgba(80,200,20,0.35);flex-shrink:0}
+.brand-icon svg{width:22px;height:22px}
+.brand-tamil{font-family:'Noto Sans Tamil',sans-serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,#90ff40,#f5c518,#ff8040);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.brand-sub{font-size:0.68rem;color:var(--text-m);font-weight:300;letter-spacing:0.08em;text-transform:uppercase}
+.topbar-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.tb-btn{display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:8px;border:1px solid var(--ui-border);background:rgba(255,255,255,0.03);color:var(--text-s);font-size:0.77rem;font-weight:500;cursor:pointer;transition:all 0.17s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.tb-btn:hover{border-color:var(--ui-border-h);color:var(--text-p);background:rgba(80,200,40,0.09)}
+.tb-btn svg{width:14px;height:14px;stroke:currentColor;flex-shrink:0}
+.tb-btn.coffee{border-color:rgba(245,197,24,0.28);color:var(--acc-y)}
+.tb-btn.coffee:hover{background:rgba(245,197,24,0.09)}
+.tb-btn.premium{border-color:rgba(109,204,48,0.38);color:var(--acc-g)}
+.tb-btn.premium:hover{background:rgba(109,204,48,0.11)}
+.tb-btn.install{border-color:rgba(45,232,192,0.3);color:var(--acc-t);display:none}
+.prem-badge{display:none;align-items:center;gap:4px;font-size:0.7rem;padding:4px 9px;border-radius:50px;background:rgba(245,197,24,0.14);color:var(--acc-y);border:1px solid rgba(245,197,24,0.28);font-weight:600}
+.prem-badge.show{display:flex}
+.prem-badge svg{width:11px;height:11px;stroke:currentColor}
+
+.main{max-width:800px;margin:0 auto;padding:18px 15px 90px}
+
+.search-wrap{position:relative;margin-bottom:18px}
+.search-wrap .si{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;stroke:var(--text-m);pointer-events:none}
+#searchInput{width:100%;padding:12px 46px 12px 44px;background:var(--ui-card);border:1px solid var(--ui-border);border-radius:var(--radius);color:var(--text-p);font-family:'DM Sans',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+#searchInput::placeholder{color:var(--text-m)}
+#searchInput:focus{border-color:var(--acc-g);box-shadow:0 0 0 3px rgba(109,204,48,0.11)}
+.sclear{position:absolute;right:13px;top:50%;transform:translateY(-50%);width:25px;height:25px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--ui-border);display:none;align-items:center;justify-content:center;cursor:pointer;color:var(--text-m)}
+.sclear svg{width:12px;height:12px;stroke:currentColor}
+.sclear.show{display:flex}
+
+.chips-lbl{font-size:0.67rem;font-weight:600;letter-spacing:0.11em;text-transform:uppercase;color:var(--text-m);margin-bottom:9px;padding:0 2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:50px;font-size:0.78rem;font-weight:500;border:1px solid var(--ui-border);background:rgba(255,255,255,0.02);color:var(--text-s);cursor:pointer;transition:all 0.17s}
+.chip:hover,.chip.active{border-color:var(--acc-g);color:var(--text-p);background:rgba(109,204,48,0.08)}
+
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.sec-title{display:flex;align-items:center;gap:6px;font-size:0.83rem;font-weight:600;color:var(--text-s)}
+.sec-title svg{width:14px;height:14px;stroke:var(--acc-g)}
+.cpill{font-size:0.7rem;color:var(--text-m);background:rgba(255,255,255,0.04);border:1px solid var(--ui-border);padding:2px 8px;border-radius:50px}
+
+#favSection{display:none;margin-bottom:26px}
+#favSection.show{display:block}
+
+.slist{display:flex;flex-direction:column;gap:10px}
+.scard{background:var(--ui-card);border:1px solid var(--ui-border);border-radius:var(--radius);padding:14px 15px;animation:fadeUp 0.26s ease both;transition:border-color 0.2s,transform 0.14s}
+.scard:hover{border-color:var(--ui-border-h);transform:translateY(-1px)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:9px;margin-bottom:10px}
+.card-id{display:flex;align-items:center;gap:9px;flex:1;min-width:0}
+.avatar{width:40px;height:40px;border-radius:9px;flex-shrink:0;background:linear-gradient(135deg,rgba(60,120,20,0.45),rgba(45,200,180,0.2));border:1px solid var(--ui-border);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:var(--acc-g);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.sname{font-size:0.94rem;font-weight:600;color:var(--text-p);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.smeta{display:flex;align-items:center;gap:5px;margin-top:2px;flex-wrap:wrap}
+.badge{font-size:0.65rem;font-weight:500;padding:2px 6px;border-radius:50px}
+.bc{background:rgba(45,232,192,0.10);color:var(--acc-t);border:1px solid rgba(45,232,192,0.18)}
+.bl{background:rgba(109,204,48,0.09);color:var(--acc-g);border:1px solid rgba(109,204,48,0.18)}
+.bt{background:rgba(245,197,24,0.09);color:var(--acc-y);border:1px solid rgba(245,197,24,0.18)}
+.card-acts{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.ibtn{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.03);border:1px solid var(--ui-border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.17s;color:var(--text-m)}
+.ibtn svg{width:13px;height:13px;stroke:currentColor}
+.ibtn:hover{border-color:var(--ui-border-h);color:var(--text-s)}
+.ibtn.fav-on{color:var(--acc-y);border-color:rgba(245,197,24,0.28);background:rgba(245,197,24,0.07)}
+.ibtn.hbtn:hover{color:var(--acc-t);border-color:rgba(45,232,192,0.28)}
+
+.player-row{display:flex;align-items:center;gap:8px}
+.play-btn{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#3a8c10,#78cc20);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.14s,box-shadow 0.14s;box-shadow:0 0 12px rgba(109,204,48,0.28);font-family:'DM Sans',sans-serif}
+.play-btn:hover{transform:scale(1.09);box-shadow:0 0 20px rgba(109,204,48,0.48)}
+.play-btn svg{width:13px;height:13px;fill:white;stroke:none}
+.play-btn.on{background:linear-gradient(135deg,#b03020,#e04030)}
+.prog-area{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.np-text{font-size:0.66rem;color:var(--acc-g);font-weight:600;letter-spacing:0.04em;display:none}
+.np-text.show{display:block}
+.stat-text{font-size:0.7rem;color:var(--text-m)}
+.abar{height:3px;border-radius:2px;background:var(--ui-border);overflow:hidden;display:none}
+.abar.show{display:block}
+.afill{height:100%;width:0%;background:linear-gradient(90deg,var(--acc-g),var(--acc-t));border-radius:2px}
+.afill.pulse{animation:aw 1.8s ease-in-out infinite}
+@keyframes aw{0%,100%{width:28%}50%{width:82%}}
+.vol-wrap{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.vol-wrap svg{width:12px;height:12px;stroke:var(--text-m);flex-shrink:0}
+.vol-sl{width:62px;height:3px;accent-color:var(--acc-g);cursor:pointer}
+
+.state-box{text-align:center;padding:42px 20px;color:var(--text-m);font-size:0.86rem}
+.ldots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--acc-g);margin:0 3px;animation:dot 1.2s infinite}
+.ldots span:nth-child(2){animation-delay:.2s}
+.ldots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-7px);opacity:1}}
+
+.modal-wrap{display:none;min-height:50vh;background:rgba(0,0,0,0.68);padding:36px 15px;align-items:flex-start;justify-content:center;z-index:500}
+.modal-wrap.open{display:flex}
+.modal-box{background:var(--ui-surface);border:1px solid var(--ui-border);border-radius:18px;padding:24px;max-width:490px;width:100%;max-height:78vh;overflow-y:auto}
+.modal-box h3{font-family:'Noto Sans Tamil',sans-serif;font-size:1.02rem;font-weight:700;margin-bottom:12px;color:var(--acc-g)}
+.modal-box h4{font-size:0.82rem;font-weight:600;color:var(--text-s);margin:12px 0 5px}
+.modal-box p{font-size:0.8rem;color:var(--text-s);line-height:1.75;margin-bottom:7px}
+.modal-box a{color:var(--acc-t);text-decoration:none}
+.modal-box code{font-size:0.78rem;background:rgba(255,255,255,0.07);padding:1px 5px;border-radius:4px;color:var(--acc-g)}
+.mclose{margin-top:12px;width:100%;padding:10px;border-radius:9px;background:var(--ui-card);border:1px solid var(--ui-border);color:var(--text-s);cursor:pointer;font-size:0.86rem;font-family:'DM Sans',sans-serif;transition:all 0.14s}
+.mclose:hover{border-color:var(--ui-border-h);color:var(--text-p)}
+
+.stripe-tiers{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}
+.tier-card{background:var(--ui-card);border:1px solid var(--ui-border);border-radius:11px;padding:13px;text-align:center;cursor:pointer;transition:all 0.17s}
+.tier-card:hover,.tier-card.sel{border-color:var(--acc-g);background:rgba(109,204,48,0.07)}
+.tier-price{font-size:1.35rem;font-weight:700;color:var(--acc-g);margin-bottom:3px}
+.tier-label{font-size:0.72rem;color:var(--text-s)}
+.stripe-pay-btn{width:100%;padding:12px;border-radius:10px;background:linear-gradient(135deg,#3a8c10,#78cc20);border:none;color:#fff;font-size:0.93rem;font-weight:700;cursor:pointer;transition:opacity 0.14s;margin-top:9px;font-family:'DM Sans',sans-serif}
+.stripe-pay-btn:hover{opacity:0.9}
+.stripe-pay-btn:disabled{opacity:0.5;cursor:not-allowed}
+.sec-note{display:flex;align-items:center;justify-content:center;gap:5px;font-size:0.7rem;color:var(--text-m);margin-top:7px}
+.sec-note svg{width:11px;height:11px;stroke:currentColor}
+
+#pwaBanner{background:var(--ui-surface);border-top:1px solid var(--ui-border);padding:13px 18px;display:none;align-items:center;justify-content:space-between;gap:10px}
+#pwaBanner.show{display:flex}
+#pwaBanner p{font-size:0.81rem;color:var(--text-s)}
+#pwaBanner strong{color:var(--text-p)}
+.pwa-acts{display:flex;gap:7px;flex-shrink:0}
+.btn-g{padding:8px 15px;border-radius:8px;background:linear-gradient(135deg,#3a8c10,#78cc20);border:none;color:#fff;font-size:0.79rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-ghost{padding:8px 11px;border-radius:8px;background:transparent;border:1px solid var(--ui-border);color:var(--text-m);font-size:0.79rem;cursor:pointer;font-family:'DM Sans',sans-serif}
+.btn-ghost:hover{color:var(--text-s)}
+
+.footer{text-align:center;padding:26px 18px 14px;font-size:0.71rem;color:var(--text-m);line-height:1.9}
+.footer a{color:var(--acc-g);text-decoration:none;margin:0 5px}
+.footer a:hover{text-decoration:underline}
+
+@media(max-width:520px){
+  .stripe-tiers{grid-template-columns:1fr}
+  .vol-wrap{display:none}
+  .tb-btn span{display:none}
+  .brand-tamil{font-size:1rem}
+  .topbar-actions{gap:5px}
+}
+</style>
+</head>
+<body>
+
+<!-- ANIMATED TAMIL NADU LANDSCAPE -->
+<div class="hero-scene" aria-hidden="true">
+<svg viewBox="0 0 1400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+<defs>
+  <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#1a6ea8"/>
+    <stop offset="45%" stop-color="#4a9ed4"/>
+    <stop offset="100%" stop-color="#7abce0"/>
+  </linearGradient>
+  <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#1e7aaa"/>
+    <stop offset="100%" stop-color="#0d4a70"/>
+  </linearGradient>
+  <linearGradient id="riceFieldG" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#3aaa40"/>
+    <stop offset="100%" stop-color="#1e6824"/>
+  </linearGradient>
+  <clipPath id="sc">
+    <rect width="1400" height="300"/>
+  </clipPath>
+</defs>
+<g clip-path="url(#sc)">
+
+<!-- Sky -->
+<rect width="1400" height="300" fill="url(#skyG)"/>
+
+<!-- Sun with glow rings -->
+<circle cx="1150" cy="55" r="32" fill="#FFF0A0" opacity="0.97"/>
+<circle cx="1150" cy="55" r="44" fill="#FFE870" opacity="0.14"/>
+<circle cx="1150" cy="55" r="60" fill="#FFE020" opacity="0.06"/>
+
+<!-- Cloud 1 -->
+<g>
+  <ellipse cx="140" cy="52" rx="58" ry="21" fill="white" opacity="0.88"/>
+  <ellipse cx="108" cy="58" rx="38" ry="17" fill="white" opacity="0.88"/>
+  <ellipse cx="172" cy="58" rx="36" ry="16" fill="white" opacity="0.88"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;10,0;0,0" dur="20s" repeatCount="indefinite"/>
+</g>
+<!-- Cloud 2 -->
+<g>
+  <ellipse cx="480" cy="42" rx="52" ry="18" fill="white" opacity="0.72"/>
+  <ellipse cx="452" cy="48" rx="34" ry="15" fill="white" opacity="0.72"/>
+  <ellipse cx="514" cy="48" rx="32" ry="14" fill="white" opacity="0.72"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;-12,0;0,0" dur="24s" repeatCount="indefinite"/>
+</g>
+<!-- Cloud 3 -->
+<g>
+  <ellipse cx="800" cy="35" rx="60" ry="20" fill="white" opacity="0.62"/>
+  <ellipse cx="770" cy="42" rx="40" ry="16" fill="white" opacity="0.62"/>
+  <ellipse cx="835" cy="42" rx="38" ry="15" fill="white" opacity="0.62"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;8,0;0,0" dur="28s" repeatCount="indefinite"/>
+</g>
+
+<!-- Background hills -->
+<ellipse cx="250" cy="188" rx="220" ry="72" fill="#1a5c24" opacity="0.48"/>
+<ellipse cx="620" cy="195" rx="260" ry="68" fill="#1e6828" opacity="0.42"/>
+<ellipse cx="980" cy="190" rx="240" ry="70" fill="#1a5c24" opacity="0.46"/>
+<ellipse cx="1300" cy="193" rx="200" ry="65" fill="#1e6828" opacity="0.40"/>
+
+<!-- RIVER (left portion) -->
+<path d="M0,205 Q50,190 100,200 Q150,210 200,200 Q230,194 250,206 L250,300 L0,300 Z" fill="url(#waterG)"/>
+<!-- River shimmer waves -->
+<path d="M15,214 Q65,207 115,214 Q165,221 210,214" fill="none" stroke="#5dade2" stroke-width="2.2" opacity="0.48">
+  <animate attributeName="d" values="M15,214 Q65,207 115,214 Q165,221 210,214;M15,219 Q65,212 115,219 Q165,226 210,219;M15,214 Q65,207 115,214 Q165,221 210,214" dur="3s" repeatCount="indefinite"/>
+</path>
+<path d="M8,228 Q62,221 116,228 Q170,235 214,228" fill="none" stroke="#7ec8e0" stroke-width="1.5" opacity="0.36">
+  <animate attributeName="d" values="M8,228 Q62,221 116,228 Q170,235 214,228;M8,233 Q62,226 116,233 Q170,240 214,233;M8,228 Q62,221 116,228 Q170,235 214,228" dur="2.4s" repeatCount="indefinite"/>
+</path>
+<path d="M20,244 Q70,238 120,244 Q170,250 210,244" fill="none" stroke="#4a9edd" stroke-width="1.3" opacity="0.28">
+  <animate attributeName="d" values="M20,244 Q70,238 120,244 Q170,250 210,244;M20,248 Q70,242 120,248 Q170,254 210,248;M20,244 Q70,238 120,244 Q170,250 210,244" dur="3.5s" repeatCount="indefinite"/>
+</path>
+
+<!-- Lotus flowers in river -->
+<g transform="translate(55,250)">
+  <ellipse cx="-14" cy="3" rx="12" ry="5.5" fill="#27922a" opacity="0.7"/>
+  <ellipse cx="14" cy="5" rx="11" ry="5" fill="#1e7020" opacity="0.65"/>
+  <circle cx="0" cy="0" r="9" fill="#e090bc" opacity="0.82"/>
+  <circle cx="0" cy="0" r="5.5" fill="#f4bcd8" opacity="0.90"/>
+</g>
+<g transform="translate(120,262)">
+  <ellipse cx="-10" cy="2" rx="9" ry="4.5" fill="#27922a" opacity="0.65"/>
+  <circle cx="0" cy="0" r="7" fill="#f0a8c8" opacity="0.78"/>
+  <circle cx="0" cy="0" r="4" fill="#f8cce0" opacity="0.88"/>
+</g>
+
+<!-- Ground base -->
+<rect x="0" y="200" width="1400" height="100" fill="#1e5c28"/>
+
+<!-- PADDY FIELD SECTIONS with mud bunds -->
+<!-- Horizontal bunds -->
+<rect x="252" y="205" width="1148" height="7" fill="#7d6414" rx="2"/>
+<rect x="252" y="232" width="1148" height="5" fill="#6b5616" rx="2"/>
+<rect x="252" y="256" width="1148" height="5" fill="#7d6414" rx="2"/>
+<!-- Vertical bunds -->
+<rect x="420" y="205" width="5" height="56" fill="#7d6414"/>
+<rect x="580" y="205" width="5" height="56" fill="#6b5616"/>
+<rect x="740" y="205" width="5" height="56" fill="#7d6414"/>
+<rect x="900" y="205" width="5" height="56" fill="#6b5616"/>
+<rect x="1060" y="205" width="5" height="56" fill="#7d6414"/>
+<rect x="1220" y="205" width="5" height="56" fill="#7d6414"/>
+
+<!-- Water reflections in paddy fields -->
+<rect x="256" y="212" width="159" height="16" fill="#3a90c0" opacity="0.30" rx="1"/>
+<rect x="425" y="212" width="150" height="16" fill="#4a9edd" opacity="0.25" rx="1"/>
+<rect x="585" y="212" width="150" height="16" fill="#3a90c0" opacity="0.28" rx="1"/>
+<rect x="745" y="212" width="150" height="16" fill="#4a9edd" opacity="0.22" rx="1"/>
+<rect x="905" y="212" width="150" height="16" fill="#3a90c0" opacity="0.26" rx="1"/>
+<rect x="1065" y="212" width="150" height="16" fill="#4a9edd" opacity="0.24" rx="1"/>
+<rect x="1225" y="212" width="170" height="16" fill="#3a90c0" opacity="0.28" rx="1"/>
+
+<!-- RICE PLANTS row 1 - lush Tamil Nadu paddy -->
+<g fill="#2eaa30" stroke="none">
+  <!-- Field 1 -->
+  <path d="M268,212 Q270,204 272,196 Q274,204 276,212 M272,204 Q277,199 283,202 M272,204 Q267,199 262,202"/>
+  <path d="M290,212 Q292,204 294,196 Q296,204 298,212 M294,204 Q299,199 305,202 M294,204 Q289,199 285,202"/>
+  <path d="M312,212 Q314,204 316,196 Q318,204 320,212 M316,204 Q321,199 327,202 M316,204 Q311,199 307,202"/>
+  <path d="M334,212 Q336,204 338,196 Q340,204 342,212 M338,204 Q343,199 349,202 M338,204 Q333,199 329,202"/>
+  <path d="M356,212 Q358,204 360,196 Q362,204 364,212 M360,204 Q365,199 371,202 M360,204 Q355,199 351,202"/>
+  <path d="M378,212 Q380,204 382,196 Q384,204 386,212 M382,204 Q387,199 393,202 M382,204 Q377,199 373,202"/>
+  <path d="M400,212 Q402,204 404,196 Q406,204 408,212 M404,204 Q409,199 414,202 M404,204 Q399,199 395,202"/>
+  <!-- Field 2 -->
+  <path d="M430,212 Q432,204 434,196 Q436,204 438,212 M434,204 Q439,199 445,202 M434,204 Q429,199 425,202"/>
+  <path d="M452,212 Q454,204 456,196 Q458,204 460,212 M456,204 Q461,199 467,202 M456,204 Q451,199 447,202"/>
+  <path d="M474,212 Q476,204 478,196 Q480,204 482,212 M478,204 Q483,199 489,202 M478,204 Q473,199 469,202"/>
+  <path d="M496,212 Q498,204 500,196 Q502,204 504,212 M500,204 Q505,199 511,202 M500,204 Q495,199 491,202"/>
+  <path d="M518,212 Q520,204 522,196 Q524,204 526,212 M522,204 Q527,199 533,202 M522,204 Q517,199 513,202"/>
+  <path d="M540,212 Q542,204 544,196 Q546,204 548,212 M544,204 Q549,199 555,202 M544,204 Q539,199 535,202"/>
+  <path d="M562,212 Q564,204 566,196 Q568,204 570,212 M566,204 Q571,199 575,202 M566,204 Q561,199 557,202"/>
+  <!-- Field 3 -->
+  <path d="M590,212 Q592,204 594,196 Q596,204 598,212 M594,204 Q599,199 605,202 M594,204 Q589,199 585,202"/>
+  <path d="M612,212 Q614,204 616,196 Q618,204 620,212 M616,204 Q621,199 627,202 M616,204 Q611,199 607,202"/>
+  <path d="M634,212 Q636,204 638,196 Q640,204 642,212 M638,204 Q643,199 649,202 M638,204 Q633,199 629,202"/>
+  <path d="M656,212 Q658,204 660,196 Q662,204 664,212 M660,204 Q665,199 671,202 M660,204 Q655,199 651,202"/>
+  <path d="M678,212 Q680,204 682,196 Q684,204 686,212 M682,204 Q687,199 693,202 M682,204 Q677,199 673,202"/>
+  <path d="M700,212 Q702,204 704,196 Q706,204 708,212 M704,204 Q709,199 714,202 M704,204 Q699,199 695,202"/>
+  <path d="M722,212 Q724,204 726,196 Q728,204 730,212 M726,204 Q731,199 735,202 M726,204 Q721,199 717,202"/>
+  <!-- Fields 4-7 abbreviated -->
+  <path d="M750,212 Q752,204 754,196 Q756,204 758,212"/> <path d="M772,212 Q774,204 776,196 Q778,204 780,212"/> <path d="M794,212 Q796,204 798,196 Q800,204 802,212"/> <path d="M816,212 Q818,204 820,196 Q822,204 824,212"/> <path d="M838,212 Q840,204 842,196 Q844,204 846,212"/> <path d="M860,212 Q862,204 864,196 Q866,204 868,212"/> <path d="M882,212 Q884,204 886,196 Q888,204 890,212"/>
+  <path d="M910,212 Q912,204 914,196 Q916,204 918,212"/> <path d="M932,212 Q934,204 936,196 Q938,204 940,212"/> <path d="M954,212 Q956,204 958,196 Q960,204 962,212"/> <path d="M976,212 Q978,204 980,196 Q982,204 984,212"/> <path d="M998,212 Q1000,204 1002,196 Q1004,204 1006,212"/> <path d="M1020,212 Q1022,204 1024,196 Q1026,204 1028,212"/> <path d="M1042,212 Q1044,204 1046,196 Q1048,204 1050,212"/>
+  <path d="M1070,212 Q1072,204 1074,196 Q1076,204 1078,212"/> <path d="M1092,212 Q1094,204 1096,196 Q1098,204 1100,212"/> <path d="M1114,212 Q1116,204 1118,196 Q1120,204 1122,212"/> <path d="M1136,212 Q1138,204 1140,196 Q1142,204 1144,212"/> <path d="M1158,212 Q1160,204 1162,196 Q1164,204 1166,212"/> <path d="M1180,212 Q1182,204 1184,196 Q1186,204 1188,212"/> <path d="M1202,212 Q1204,204 1206,196 Q1208,204 1210,212"/>
+  <path d="M1230,212 Q1232,204 1234,196 Q1236,204 1238,212"/> <path d="M1252,212 Q1254,204 1256,196 Q1258,204 1260,212"/> <path d="M1274,212 Q1276,204 1278,196 Q1280,204 1282,212"/> <path d="M1296,212 Q1298,204 1300,196 Q1302,204 1304,212"/> <path d="M1318,212 Q1320,204 1322,196 Q1324,204 1326,212"/> <path d="M1340,212 Q1342,204 1344,196 Q1346,204 1348,212"/> <path d="M1362,212 Q1364,204 1366,196 Q1368,204 1370,212"/>
+</g>
+
+<!-- BULL 1 - dark, left field -->
+<g transform="translate(308,225)">
+  <ellipse cx="0" cy="0" rx="30" ry="17" fill="#3e2a1a"/>
+  <ellipse cx="28" cy="-9" rx="15" ry="12" fill="#4e3828"/>
+  <ellipse cx="39" cy="-6" rx="8" ry="6" fill="#6a4e38"/>
+  <circle cx="37" cy="-5" r="1.6" fill="#1e0e06"/>
+  <circle cx="41" cy="-5" r="1.6" fill="#1e0e06"/>
+  <circle cx="32" cy="-12" r="2.8" fill="#1e0e06"/>
+  <circle cx="32.5" cy="-12.5" r="0.9" fill="white"/>
+  <path d="M26,-18 Q22,-26 17,-24" stroke="#c09040" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M30,-18 Q35,-26 40,-24" stroke="#c09040" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="24" cy="-15" rx="5.5" ry="3.2" fill="#6a4e38" transform="rotate(-22,24,-15)"/>
+  <rect x="-22" y="15" width="7" height="15" fill="#3e2a1a" rx="2.5"/>
+  <rect x="-9" y="15" width="7" height="15" fill="#301e10" rx="2.5"/>
+  <rect x="5" y="15" width="7" height="15" fill="#3e2a1a" rx="2.5"/>
+  <rect x="17" y="15" width="7" height="15" fill="#301e10" rx="2.5"/>
+  <rect x="-22" y="28" width="7" height="5" fill="#1e0e06" rx="1.5"/>
+  <rect x="-9" y="28" width="7" height="5" fill="#1e0e06" rx="1.5"/>
+  <rect x="5" y="28" width="7" height="5" fill="#1e0e06" rx="1.5"/>
+  <rect x="17" y="28" width="7" height="5" fill="#1e0e06" rx="1.5"/>
+  <path d="M-28,0 Q-42,-5 -40,9 Q-38,16 -33,20" stroke="#3e2a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="-8" cy="-15" rx="11" ry="9" fill="#4e3828"/>
+  <rect x="8" y="-13" width="24" height="4.5" fill="#c09040" rx="2.5"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;0,-1.5;0,0;0,1;0,0" dur="3.5s" repeatCount="indefinite" additive="sum"/>
+</g>
+
+<!-- BULL 2 - lighter, mid-right field -->
+<g transform="translate(820,223)">
+  <ellipse cx="0" cy="0" rx="28" ry="16" fill="#6e5030"/>
+  <ellipse cx="-26" cy="-8" rx="14" ry="11" fill="#806040"/>
+  <ellipse cx="-37" cy="-5" rx="7" ry="5.5" fill="#9a7850"/>
+  <circle cx="-35" cy="-4" r="1.4" fill="#1e0e06"/>
+  <circle cx="-39" cy="-4" r="1.4" fill="#1e0e06"/>
+  <circle cx="-30" cy="-11" r="2.4" fill="#1e0e06"/>
+  <circle cx="-29.5" cy="-11.5" r="0.8" fill="white"/>
+  <path d="M-24,-17 Q-20,-24 -15,-22" stroke="#c09040" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M-28,-17 Q-33,-24 -38,-22" stroke="#c09040" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="-22" cy="-14" rx="5" ry="3" fill="#9a7850" transform="rotate(22,-22,-14)"/>
+  <rect x="-22" y="14" width="6" height="14" fill="#6e5030" rx="2"/>
+  <rect x="-10" y="14" width="6" height="14" fill="#5a3e20" rx="2"/>
+  <rect x="4" y="14" width="6" height="14" fill="#6e5030" rx="2"/>
+  <rect x="15" y="14" width="6" height="14" fill="#5a3e20" rx="2"/>
+  <rect x="-22" y="26" width="6" height="4.5" fill="#1e0e06" rx="1.5"/>
+  <rect x="-10" y="26" width="6" height="4.5" fill="#1e0e06" rx="1.5"/>
+  <rect x="4" y="26" width="6" height="4.5" fill="#1e0e06" rx="1.5"/>
+  <rect x="15" y="26" width="6" height="4.5" fill="#1e0e06" rx="1.5"/>
+  <path d="M26,2 Q40,-3 38,11 Q36,17 31,21" stroke="#6e5030" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="6" cy="-14" rx="10" ry="8" fill="#806040"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;-1,0;0,0;1,0;0,0" dur="4.2s" repeatCount="indefinite" additive="sum"/>
+</g>
+
+<!-- FARMER with conical hat -->
+<g transform="translate(560,210)">
+  <ellipse cx="0" cy="-34" rx="18" ry="4.5" fill="#9a7820"/>
+  <path d="M-18,-34 L0,-56 L18,-34 Z" fill="#9a7820"/>
+  <circle cx="0" cy="-38" r="9" fill="#8c6828"/>
+  <rect x="-7" y="-29" width="14" height="24" fill="#e8d5a0" rx="3.5"/>
+  <path d="M-7,-5 L-11,20 L11,20 L7,-5 Z" fill="white"/>
+  <line x1="7" y1="-22" x2="26" y2="-11" stroke="#8c6828" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="-7" y1="-22" x2="-16" y2="-6" stroke="#8c6828" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="-4" y1="20" x2="-7" y2="36" stroke="#e8d5a0" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="4" y1="20" x2="7" y2="36" stroke="#e8d5a0" stroke-width="4.5" stroke-linecap="round"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;0,-1;0,0" dur="2.2s" repeatCount="indefinite" additive="sum"/>
+</g>
+
+<!-- LARGE TREES -->
+<!-- Left banyan -->
+<g transform="translate(20,90)">
+  <rect x="-9" y="0" width="18" height="125" fill="#5c3c1a" rx="4.5"/>
+  <line x1="-22" y1="28" x2="-16" y2="125" stroke="#7a5228" stroke-width="3"/>
+  <line x1="22" y1="22" x2="20" y2="125" stroke="#7a5228" stroke-width="3"/>
+  <line x1="-40" y1="18" x2="-32" y2="125" stroke="#6a4820" stroke-width="2.5"/>
+  <line x1="40" y1="24" x2="35" y2="125" stroke="#6a4820" stroke-width="2.5"/>
+  <ellipse cx="0" cy="-12" rx="72" ry="38" fill="#1a6e1c"/>
+  <ellipse cx="0" cy="-6" rx="80" ry="44" fill="#239128"/>
+  <ellipse cx="-22" cy="8" rx="56" ry="32" fill="#1a6e1c"/>
+  <ellipse cx="26" cy="6" rx="52" ry="30" fill="#259426"/>
+  <ellipse cx="0" cy="16" rx="60" ry="26" fill="#27a02a"/>
+</g>
+
+<!-- Coconut tree near river -->
+<g transform="translate(220,108)">
+  <path d="M0,115 Q-6,72 10,32 Q14,12 12,0" stroke="#9a7220" stroke-width="11" fill="none" stroke-linecap="round"/>
+  <path d="M0,115 Q-6,72 10,32 Q14,12 12,0" stroke="#b08e30" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M12,0 Q-22,-28 -50,-18" stroke="#239128" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <path d="M12,0 Q-12,-38 -22,-60" stroke="#27a02a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M12,0 Q16,-38 12,-62" stroke="#239128" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M12,0 Q38,-32 60,-24" stroke="#27a02a" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+  <path d="M12,0 Q44,-16 66,2" stroke="#239128" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <circle cx="-4" cy="-6" r="5.5" fill="#9a7220"/>
+  <circle cx="6" cy="-9" r="5.5" fill="#b08e30"/>
+  <circle cx="16" cy="-7" r="5" fill="#9a7220"/>
+  <animateTransform attributeName="transform" type="rotate" values="0,12,0;2.5,12,0;0,12,0;-2.5,12,0;0,12,0" dur="5.5s" repeatCount="indefinite" additive="sum"/>
+</g>
+
+<!-- Neem tree right side -->
+<g transform="translate(1160,100)">
+  <rect x="-8" y="0" width="16" height="115" fill="#6a4a20" rx="3.5"/>
+  <ellipse cx="0" cy="-18" rx="60" ry="42" fill="#1a6e1a"/>
+  <ellipse cx="-18" cy="-6" rx="46" ry="34" fill="#239128"/>
+  <ellipse cx="20" cy="-10" rx="42" ry="32" fill="#1a6e1a"/>
+  <ellipse cx="0" cy="-28" rx="38" ry="25" fill="#27a02a"/>
+</g>
+
+<!-- Peepal tree far right -->
+<g transform="translate(1360,105)">
+  <rect x="-7" y="0" width="14" height="110" fill="#5c3c1a" rx="3"/>
+  <ellipse cx="0" cy="-22" rx="52" ry="40" fill="#1a6e1c"/>
+  <ellipse cx="0" cy="-14" rx="60" ry="36" fill="#259426"/>
+  <ellipse cx="-12" cy="4" rx="42" ry="28" fill="#1a6e1a"/>
+  <ellipse cx="14" cy="2" rx="40" ry="26" fill="#239128"/>
+</g>
+
+<!-- Mid background tree -->
+<g transform="translate(1020,122)">
+  <rect x="-6" y="0" width="12" height="82" fill="#6a4a20" rx="2.5"/>
+  <ellipse cx="0" cy="-12" rx="42" ry="32" fill="#1a6e1c"/>
+  <ellipse cx="0" cy="-6" rx="48" ry="28" fill="#27a02a"/>
+</g>
+
+<!-- BIRDS -->
+<!-- White egret 1 -->
+<g transform="translate(360,226)">
+  <ellipse cx="0" cy="-9" rx="5.5" ry="8" fill="white"/>
+  <circle cx="0" cy="-19" r="4.5" fill="white"/>
+  <line x1="0" y1="-14" x2="0" y2="2" stroke="white" stroke-width="1.8"/>
+  <line x1="0" y1="2" x2="-5" y2="10" stroke="#9a9000" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="0" y1="2" x2="5" y2="10" stroke="#9a9000" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M0,-19 L7,-17" stroke="#e8b820" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="M0,-7 Q-9,2 -12,9" stroke="white" stroke-width="1.2" fill="none" opacity="0.7"/>
+</g>
+<!-- White egret 2 -->
+<g transform="translate(640,228)">
+  <ellipse cx="0" cy="-8" rx="4.5" ry="7" fill="white"/>
+  <circle cx="0" cy="-16" r="4" fill="white"/>
+  <line x1="0" y1="-12" x2="0" y2="1" stroke="white" stroke-width="1.6"/>
+  <line x1="0" y1="1" x2="-4" y2="8" stroke="#9a9000" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="0" y1="1" x2="4" y2="8" stroke="#9a9000" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M0,-16 L6,-14" stroke="#e8b820" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+</g>
+<!-- Kingfisher on river branch -->
+<g transform="translate(192,182)">
+  <line x1="0" y1="0" x2="22" y2="0" stroke="#6a4a20" stroke-width="2.5"/>
+  <ellipse cx="14" cy="-7" rx="10" ry="5.5" fill="#1a8ca0"/>
+  <ellipse cx="21" cy="-8" rx="6" ry="3.5" fill="#e87020"/>
+  <circle cx="12" cy="-9" r="3" fill="#1a8ca0"/>
+  <circle cx="11" cy="-10" r="1.8" fill="#0a5c70"/>
+  <circle cx="11.3" cy="-10.3" r="0.7" fill="white"/>
+  <path d="M24,-7 L31,-5" stroke="#c04808" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M14,-2 Q16,3 20,5" stroke="#1a7890" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</g>
+<!-- Peacock right area -->
+<g transform="translate(1080,218)">
+  <path d="M0,0 Q-28,-34 -33,-56" stroke="#1a6ea0" stroke-width="2.5" fill="none" opacity="0.85"/>
+  <path d="M0,0 Q-16,-40 -11,-62" stroke="#27922a" stroke-width="2.5" fill="none" opacity="0.85"/>
+  <path d="M0,0 Q0,-44 6,-65" stroke="#1a6ea0" stroke-width="2.5" fill="none" opacity="0.85"/>
+  <path d="M0,0 Q16,-40 22,-62" stroke="#27922a" stroke-width="2.5" fill="none" opacity="0.85"/>
+  <path d="M0,0 Q28,-34 36,-55" stroke="#1a6ea0" stroke-width="2.5" fill="none" opacity="0.85"/>
+  <circle cx="-31" cy="-55" r="4.5" fill="#1a3a90" opacity="0.72"/>
+  <circle cx="-31" cy="-55" r="2.2" fill="#c8e020" opacity="0.82"/>
+  <circle cx="6" cy="-64" r="4.5" fill="#1a3a90" opacity="0.72"/>
+  <circle cx="6" cy="-64" r="2.2" fill="#c8e020" opacity="0.82"/>
+  <circle cx="37" cy="-53" r="4.5" fill="#1a3a90" opacity="0.72"/>
+  <circle cx="37" cy="-53" r="2.2" fill="#c8e020" opacity="0.82"/>
+  <ellipse cx="0" cy="-6" rx="11" ry="8" fill="#1a6ea0"/>
+  <path d="M0,-14 Q-2,-25 0,-32" stroke="#1a6ea0" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <circle cx="0" cy="-34" r="5.5" fill="#1a6ea0"/>
+  <path d="M0,-39 Q-4,-47 -3,-51" stroke="#c8e020" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M0,-39 Q1,-49 3,-52" stroke="#c8e020" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M0,-39 Q4,-47 5,-50" stroke="#c8e020" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <circle cx="-3" cy="-51" r="2.2" fill="#c8e020"/>
+  <circle cx="3" cy="-52" r="2.2" fill="#c8e020"/>
+  <circle cx="5" cy="-50" r="2.2" fill="#c8e020"/>
+  <line x1="-4" y1="2" x2="-6" y2="15" stroke="#9a8030" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="4" y1="2" x2="6" y2="15" stroke="#9a8030" stroke-width="2.5" stroke-linecap="round"/>
+</g>
+<!-- Parrot on banyan -->
+<g transform="translate(90,98)">
+  <ellipse cx="0" cy="0" rx="8" ry="5.5" fill="#27ae60"/>
+  <circle cx="0" cy="-7" r="5" fill="#27ae60"/>
+  <circle cx="-1" cy="-8" r="2" fill="#1a8040"/>
+  <circle cx="-1.2" cy="-8.3" r="0.8" fill="white"/>
+  <path d="M4,-6 L8,-4" stroke="#e87820" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+  <path d="M0,4 Q5,9 7,14" stroke="#e8c020" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M-4,4 Q-9,8 -6,14" stroke="#239126" stroke-width="3" fill="none" stroke-linecap="round"/>
+</g>
+<!-- Flying birds flock -->
+<g fill="none" stroke="#1e3a5e" stroke-width="1.6" stroke-linecap="round" opacity="0.65">
+  <path d="M540,52 Q546,46 552,52"/>
+  <path d="M560,44 Q566,38 572,44"/>
+  <path d="M580,56 Q586,50 592,56"/>
+  <path d="M598,47 Q603,41 608,47"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;-18,-3;-36,-1;-54,-4;-72,-2" dur="10s" repeatCount="indefinite"/>
+</g>
+<g fill="none" stroke="#1e3a5e" stroke-width="1.3" stroke-linecap="round" opacity="0.48">
+  <path d="M900,38 Q905,33 910,38"/>
+  <path d="M916,44 Q921,39 926,44"/>
+  <animateTransform attributeName="transform" type="translate" values="0,0;-22,-2;-44,-1;-66,-3" dur="14s" repeatCount="indefinite"/>
+</g>
+
+<!-- Foreground reeds and grass at river bank -->
+<g fill="#1a6e20">
+  <path d="M0,270 Q3,250 2,230 Q5,250 8,270"/>
+  <path d="M14,270 Q17,246 16,224 Q19,246 22,270"/>
+  <path d="M28,270 Q31,254 30,238 Q33,254 36,270"/>
+  <path d="M42,270 Q45,258 44,245 Q47,258 50,270"/>
+  <path d="M56,270 Q59,250 58,232 Q61,250 64,270"/>
+  <path d="M70,270 Q73,260 72,248 Q75,260 78,270"/>
+  <path d="M84,270 Q87,252 86,236 Q89,252 92,270"/>
+  <path d="M98,270 Q101,256 100,244 Q103,256 106,270"/>
+  <path d="M112,270 Q115,250 114,236 Q117,250 120,270"/>
+  <path d="M126,270 Q129,260 128,248 Q131,260 134,270"/>
+  <path d="M140,270 Q143,254 142,240 Q145,254 148,270"/>
+  <path d="M154,270 Q157,262 156,250 Q159,262 162,270"/>
+  <path d="M168,270 Q171,252 170,238 Q173,252 176,270"/>
+  <path d="M182,270 Q185,256 184,242 Q187,256 190,270"/>
+  <path d="M196,270 Q199,260 198,248 Q201,260 204,270"/>
+  <path d="M210,270 Q213,254 212,240 Q215,254 218,270"/>
+  <path d="M224,270 Q227,262 226,250 Q229,262 232,270"/>
+  <path d="M238,270 Q241,250 240,234 Q243,250 246,270"/>
+</g>
+
+<!-- Foreground ground strip -->
+<rect x="0" y="278" width="1400" height="22" fill="#164a1a"/>
+<rect x="0" y="290" width="1400" height="10" fill="#102a12"/>
+
+</g>
+</svg>
+</div>
+
+<!-- APP SHELL -->
+<div id="appShell">
+
+<!-- TOP BAR -->
+<nav class="topbar">
+  <div class="brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="2.5"/>
+        <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <div class="brand-tamil">தமிழ் வானொலி</div>
+      <div class="brand-sub">Tamil Radio Directory</div>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <div class="prem-badge" id="premBadge">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Premium
+    </div>
+    <button class="tb-btn coffee" id="coffeeBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      <span>Buy Coffee</span>
+    </button>
+    <button class="tb-btn premium" id="stripeBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      <span>Go Premium</span>
+    </button>
+    <button class="tb-btn install" id="installBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>Install</span>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="search-wrap">
+    <svg class="si" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="தேடுக… Search OLI, Minnal, Sun FM, Suryan, Mirchi, BBC Tamil…" autocomplete="off" spellcheck="false">
+    <div class="sclear" id="sclear">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </div>
+
+  <div class="chips-lbl">விரைவு தேடல் — Quick Access</div>
+  <div class="chips" id="chips"></div>
+
+  <section id="favSection">
+    <div class="sec-hdr">
+      <div class="sec-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        விருப்பங்கள் — Favourites
+      </div>
+      <span class="cpill" id="favCount">0</span>
+    </div>
+    <div class="slist" id="favList"></div>
+  </section>
+
+  <section>
+    <div class="sec-hdr">
+      <div class="sec-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/></svg>
+        <span id="resTitleTxt">சிறந்த நிலையங்கள் — Featured Stations</span>
+      </div>
+      <span class="cpill" id="resCount"></span>
+    </div>
+    <div class="slist" id="resultsList">
+      <div class="state-box"><div class="ldots"><span></span><span></span><span></span></div><p style="margin-top:10px">நிலையங்களை ஏற்றுகிறது…</p></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- PWA banner -->
+<div id="pwaBanner">
+  <p><strong>தமிழ் வானொலி</strong> — உங்கள் திரையில் நிறுவுக / Add to Home Screen</p>
+  <div class="pwa-acts">
+    <button class="btn-g" id="pwaInstallBtn">நிறுவு / Install</button>
+    <button class="btn-ghost" id="pwaDismissBtn">பின்னர் / Later</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>
+    <a href="#" id="legalLink">சட்ட நிபந்தனைகள் / Legal</a>
+    <a href="#" id="disclaimerLink">மறுப்பு / Disclaimer</a>
+    <a href="#" id="privacyLink">தனியுரிமை / Privacy</a>
+    <a href="https://www.radio-browser.info" target="_blank" rel="noopener">Radio Browser API</a>
+  </p>
+  <p style="margin-top:6px;font-size:0.67rem">© 2026 தமிழ் வானொலி · All stream rights belong to respective broadcasters · No audio hosted or cached by this directory</p>
+</footer>
+
+</div>
+
+<!-- MODALS -->
+
+<!-- Stripe Premium -->
+<div class="modal-wrap" id="stripeModal">
+  <div class="modal-box">
+    <h3>⭐ Premium உறுப்பினர் — Go Premium</h3>
+    <p>Unlock an ad-free, unlimited experience. One-time lifetime payment — no subscriptions ever.</p>
+    <div class="stripe-tiers" id="tierGrid">
+      <div class="tier-card sel" data-price="199" data-label="Basic">
+        <div class="tier-price">$1.99</div>
+        <div class="tier-label">Ad-free access</div>
+      </div>
+      <div class="tier-card" data-price="499" data-label="Premium">
+        <div class="tier-price">$4.99</div>
+        <div class="tier-label">Lifetime + early features</div>
+      </div>
+    </div>
+    <button class="stripe-pay-btn" id="stripePayBtn">Pay Securely with Stripe →</button>
+    <div class="sec-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secured by Stripe · Card data never stored here
+    </div>
+    <p style="font-size:0.72rem;text-align:center;margin-top:6px;color:var(--text-m)">
+      ACTION REQUIRED: Replace STRIPE_PAYMENT_LINK in the script with your real Stripe Payment Link URL.
+    </p>
+    <button class="mclose" id="stripeClose">மூடு / Close</button>
+  </div>
+</div>
+
+<!-- Buy Me a Coffee -->
+<div class="modal-wrap" id="coffeeModal">
+  <div class="modal-box">
+    <h3 style="color:var(--acc-y)">☕ காபி வாங்குங்கள் — Buy a Coffee</h3>
+    <p>தமிழ் வானொலியை நேசிக்கிறீர்களா? ஒரு காபி மூலம் ஆதரியுங்கள்!</p>
+    <p>Love Tamil Radio? Support with a coffee — every cup keeps this directory running and growing.</p>
+    <div style="text-align:center;margin:16px 0">
+      <div style="font-size:2.8rem;margin-bottom:10px">☕</div>
+      <a href="https://www.buymeacoffee.com" target="_blank" rel="noopener" style="display:inline-block;padding:12px 30px;background:linear-gradient(135deg,#f5c518,#e8a020);border-radius:10px;color:#1a0800;font-weight:700;font-size:0.95rem;text-decoration:none">
+        Buy a Coffee ☕
+      </a>
+    </div>
+    <p style="font-size:0.72rem;text-align:center;color:var(--text-m)">
+      ACTION REQUIRED: Replace the href above with your actual buymeacoffee.com/yourname URL.
+    </p>
+    <button class="mclose" id="coffeeClose">மூடு / Close</button>
+  </div>
+</div>
+
+<!-- Legal -->
+<div class="modal-wrap" id="legalModal">
+  <div class="modal-box">
+    <h3>சட்ட நிபந்தனைகள் — Legal Terms</h3>
+    <h4>Nature of Service</h4>
+    <p>தமிழ் வானொலி is a client-side radio directory index. It does not host, cache, modify, or redistribute any audio content. All streams link directly to the original broadcaster's publicly available endpoint.</p>
+    <h4>Intellectual Property</h4>
+    <p>All station names, logos, branding, and audio content remain the exclusive intellectual property of their respective licensed broadcasters. Station data is sourced from the Radio Browser open-source community database under the CC0 public domain licence.</p>
+    <h4>Stream Links</h4>
+    <p>Stream URLs are publicly available endpoints published by broadcasters themselves. Linking to publicly available streams is consistent with established internet law including principles from <em>Svensson v. Retriever Sverige</em> and Radio Browser's own open licensing.</p>
+    <h4>Limitation of Liability</h4>
+    <p>This service is provided "as-is" without any warranties. We are not liable for stream availability, content accuracy, or any damages arising from use of this directory.</p>
+    <h4>Governing Law</h4>
+    <p>These terms are governed by the laws of the Republic of Singapore. Disputes shall be resolved in the courts of Singapore.</p>
+    <button class="mclose" id="legalClose">மூடு / Close</button>
+  </div>
+</div>
+
+<!-- Disclaimer -->
+<div class="modal-wrap" id="disclaimerModal">
+  <div class="modal-box">
+    <h3>மறுப்பு அறிக்கை — Disclaimer</h3>
+    <h4>Independent Service</h4>
+    <p>தமிழ் வானொலி is an independent community directory. It is not affiliated with, endorsed by, or officially connected to any radio broadcaster including Mediacorp OLI 96.8FM, RTM Minnal FM, Sun Network, BBC Tamil, or any other listed station.</p>
+    <h4>Geographic Availability</h4>
+    <p>Some streams may be geo-restricted by their broadcasters. If a stream is unavailable in your region, this is a broadcaster decision outside our control. Visit the station's official website for alternative access methods.</p>
+    <h4>Audio Quality</h4>
+    <p>Stream quality depends entirely on the broadcaster's server and your internet connection. We do not control, encode, or modify the audio pipeline in any way.</p>
+    <h4>Data Accuracy</h4>
+    <p>Station names, countries, and languages are sourced from community-maintained data and may occasionally be inaccurate. We make no warranties regarding the completeness or accuracy of directory information.</p>
+    <h4>No Warranties</h4>
+    <p>This directory is provided for convenience only. Users are responsible for compliance with local copyright and broadcasting laws when accessing streams.</p>
+    <button class="mclose" id="disclaimerClose">மூடு / Close</button>
+  </div>
+</div>
+
+<!-- Privacy -->
+<div class="modal-wrap" id="privacyModal">
+  <div class="modal-box">
+    <h3>தனியுரிமை கொள்கை — Privacy Policy</h3>
+    <h4>No Personal Data Collected</h4>
+    <p>தமிழ் வானொலி does not collect, store, or transmit any personally identifiable information. There are no user accounts, no login system, and no tracking infrastructure whatsoever.</p>
+    <h4>Local Storage Only</h4>
+    <p>Your saved (favourite) stations are stored exclusively in your browser's <code>localStorage</code>. This data never leaves your device and can be cleared anytime via browser settings.</p>
+    <h4>Third-Party API</h4>
+    <p>Search queries are sent directly to <a href="https://www.radio-browser.info" target="_blank" rel="noopener">radio-browser.info</a>, an open-source public API. Their privacy policy governs those requests. We do not log or store your search terms.</p>
+    <h4>Payment Processing</h4>
+    <p>Premium payments are processed entirely by Stripe Inc. We never see, store, or handle your card details. Stripe's Privacy Policy applies at <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>.</p>
+    <h4>No Cookies · No Ads · No Analytics</h4>
+    <p>We do not use cookies, advertising networks, or analytics trackers of any kind. Zero data sold, zero data shared.</p>
+    <button class="mclose" id="privacyClose">மூடு / Close</button>
+  </div>
+</div>
+
+<script>
+const API='https://de1.api.radio-browser.info/json/stations/byname/';
+const CHIPS=[
+  {l:'OLI 96.8 FM',f:'🇸🇬',q:'Oli 96'},
+  {l:'Minnal FM',f:'🇲🇾',q:'Minnal FM'},
+  {l:'Sun FM Tamil',f:'🇮🇳',q:'Sun FM Tamil'},
+  {l:'Suryan FM',f:'🇮🇳',q:'Suryan'},
+  {l:'Hello FM',f:'🇮🇳',q:'Hello FM'},
+  {l:'Kuyil FM',f:'🇮🇳',q:'Kuyil'},
+  {l:'Radio Mirchi',f:'🇮🇳',q:'Mirchi Tamil'},
+  {l:'Tamil Hits',f:'🌐',q:'Tamil Hits'},
+  {l:'BBC Tamil',f:'🇬🇧',q:'BBC Tamil'},
+  {l:'Radio One',f:'🇮🇳',q:'Radio One Tamil'},
+];
+const $=id=>document.getElementById(id);
+let favs=JSON.parse(localStorage.getItem('tv_favs')||'[]');
+let isPrem=localStorage.getItem('tv_prem')==='true';
+let audio=null,playBtn=null,debT=null,deferredPWA=null;
+let selTier={price:'199'};
+
+// Premium check on load
+const up=new URLSearchParams(location.search);
+if(up.get('payment')==='success'){localStorage.setItem('tv_prem','true');isPrem=true;history.replaceState({},'',location.pathname);}
+if(isPrem){$('premBadge').classList.add('show');$('stripeBtn').style.display='none';}
+
+// Build chips
+const chipsEl=$('chips');
+CHIPS.forEach(c=>{
+  const b=document.createElement('button');
+  b.className='chip';b.textContent=c.f+' '+c.l;
+  b.onclick=()=>{$('searchInput').value=c.q;showClear(true);fetchStations(c.q);};
+  chipsEl.appendChild(b);
+});
+
+// Search
+$('searchInput').addEventListener('input',e=>{
+  const v=e.target.value.trim();showClear(!!v);
+  clearTimeout(debT);
+  if(!v){loadFeatured();return;}
+  debT=setTimeout(()=>fetchStations(v),400);
+});
+$('sclear').onclick=()=>{$('searchInput').value='';showClear(false);loadFeatured();$('searchInput').focus();};
+function showClear(s){$('sclear').classList.toggle('show',s);}
+
+async function fetchStations(q){
+  setLoad(`"${q}" தேடுகிறது…`);
+  try{
+    const r=await fetch(`${API}${encodeURIComponent(q)}?limit=20&hidebroken=true&order=votes&reverse=true`,{headers:{'User-Agent':'TamilVanoli/1.0'}});
+    if(!r.ok)throw 0;
+    const d=await r.json();
+    $('resTitleTxt').textContent=`"${q}" — ${d.length} நிலையங்கள்`;
+    $('resCount').textContent=d.length;
+    render(d,$('resultsList'));
+  }catch{
+    $('resultsList').innerHTML='<div class="state-box"><p style="color:var(--acc-r)">இணைப்பு தோல்வி — Connection failed. Try again.</p></div>';
+  }
+}
+
+async function loadFeatured(){
+  setLoad('சிறந்த நிலையங்களை ஏற்றுகிறது…');
+  $('resTitleTxt').textContent='சிறந்த நிலையங்கள் — Featured Tamil Stations';
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch(`${API}Tamil?limit=14&hidebroken=true&order=votes&reverse=true`,{headers:{'User-Agent':'TamilVanoli/1.0'}}),
+      fetch(`${API}Kollywood?limit=8&hidebroken=true&order=votes&reverse=true`,{headers:{'User-Agent':'TamilVanoli/1.0'}}),
+    ]);
+    const [d1,d2]=await Promise.all([r1.json(),r2.json()]);
+    const seen=new Set();
+    const all=[...d1,...d2].filter(s=>{if(seen.has(s.stationuuid))return false;seen.add(s.stationuuid);return true;});
+    $('resCount').textContent=all.length;
+    render(all.slice(0,20),$('resultsList'));
+  }catch{$('resultsList').innerHTML='<div class="state-box"><p>நிலையங்களை ஏற்ற முடியவில்லை — Search above.</p></div>';}
+}
+
+function setLoad(m){$('resultsList').innerHTML=`<div class="state-box"><div class="ldots"><span></span><span></span><span></span></div><p style="margin-top:10px">${m}</p></div>`;$('resCount').textContent='';}
+
+function render(data,container){
+  container.innerHTML='';
+  if(!data.length){container.innerHTML='<div class="state-box"><p>நிலையங்கள் இல்லை — No stations found.</p></div>';return;}
+  data.forEach((s,i)=>container.appendChild(buildCard(s,i*25)));
+}
+
+function initials(n){return(n||'?').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
+function isFav(uuid){return favs.some(f=>f.stationuuid===uuid);}
+function saveFavs(){localStorage.setItem('tv_favs',JSON.stringify(favs));}
+function addFav(s){if(!isFav(s.stationuuid)){favs.push(s);saveFavs();renderFavs();}}
+function removeFav(uuid){favs=favs.filter(f=>f.stationuuid!==uuid);saveFavs();renderFavs();}
+function renderFavs(){
+  $('favList').innerHTML='';
+  const has=favs.length>0;
+  $('favSection').classList.toggle('show',has);
+  $('favCount').textContent=favs.length;
+  if(has)favs.forEach((s,i)=>$('favList').appendChild(buildCard(s,i*18)));
+}
+
+function buildCard(station,delay){
+  const name=station.name||'Unknown';
+  const country=station.country||'—';
+  const lang=(station.language||'').split(',')[0]||'';
+  const tag=(station.tags||'').split(',')[0]||'';
+  const streamUrl=station.url_resolved||station.url;
+  const hp=station.homepage||'';
+  const favicon=station.favicon||'';
+  const uuid=station.stationuuid;
+  const faved=isFav(uuid);
+
+  const card=document.createElement('div');
+  card.className='scard';
+  card.style.animationDelay=(delay||0)+'ms';
+
+  const av=favicon
+    ?`<div class="avatar"><img src="${favicon}" alt="" onerror="this.style.display='none';this.parentElement.textContent='${initials(name)}'"></div>`
+    :`<div class="avatar">${initials(name)}</div>`;
+
+  const hpBtn=hp?`<a href="${hp}" target="_blank" rel="noopener noreferrer" class="ibtn hbtn" title="Official site" aria-label="Official site"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>`:'';
+
+  card.innerHTML=`
+    <div class="card-top">
+      <div class="card-id">${av}<div style="min-width:0">
+        <div class="sname" title="${name}">${name}</div>
+        <div class="smeta">
+          ${country?`<span class="badge bc">${country}</span>`:''}
+          ${lang?`<span class="badge bl">${lang}</span>`:''}
+          ${tag?`<span class="badge bt">${tag}</span>`:''}
+        </div>
+      </div></div>
+      <div class="card-acts">
+        ${hpBtn}
+        <button class="ibtn fav-btn${faved?' fav-on':''}" title="${faved?'Remove':'Save'} favourite" data-uuid="${uuid}">
+          <svg viewBox="0 0 24 24" fill="${faved?'currentColor':'none'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="player-row">
+      <button class="play-btn" aria-label="Play ${name}"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="white"/></svg></button>
+      <div class="prog-area">
+        <span class="np-text">● இசைக்கிறது — Now playing</span>
+        <span class="stat-text">இசைக்க அழுத்துக — Press play</span>
+        <div class="abar"><div class="afill"></div></div>
+      </div>
+      <div class="vol-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        <input type="range" class="vol-sl" min="0" max="1" step="0.05" value="0.85" aria-label="Volume">
+      </div>
+    </div>`;
+
+  const pb=card.querySelector('.play-btn');
+  const st=card.querySelector('.stat-text');
+  const np=card.querySelector('.np-text');
+  const ab=card.querySelector('.abar');
+  const af=card.querySelector('.afill');
+  const vl=card.querySelector('.vol-sl');
+
+  pb.onclick=()=>{
+    if(audio&&playBtn===pb){audio.pause();audio=null;playBtn=null;ps(pb,false,st,np,ab,af);}
+    else{
+      if(audio){audio.pause();if(playBtn){const pc=playBtn.closest('.scard');if(pc)ps(playBtn,false,pc.querySelector('.stat-text'),pc.querySelector('.np-text'),pc.querySelector('.abar'),pc.querySelector('.afill'));}}
+      const a=new Audio(streamUrl);a.volume=parseFloat(vl.value);a.crossOrigin='anonymous';audio=a;playBtn=pb;
+      st.textContent='இணைக்கிறது… Connecting…';
+      a.play().then(()=>ps(pb,true,st,np,ab,af)).catch(()=>{st.textContent='நிலையம் கிடைக்கவில்லை — Try official site';ps(pb,false,st,np,ab,af);audio=null;playBtn=null;});
+      a.addEventListener('ended',()=>{ps(pb,false,st,np,ab,af);audio=null;playBtn=null;});
+    }
+  };
+  vl.addEventListener('input',()=>{if(audio&&playBtn===pb)audio.volume=parseFloat(vl.value);});
+
+  const fb=card.querySelector('.fav-btn');
+  fb.onclick=()=>{
+    if(isFav(uuid)){removeFav(uuid);fb.classList.remove('fav-on');fb.querySelector('svg').setAttribute('fill','none');}
+    else{addFav(station);fb.classList.add('fav-on');fb.querySelector('svg').setAttribute('fill','currentColor');}
+  };
+  return card;
+}
+
+function ps(btn,on,st,np,ab,af){
+  if(on){btn.classList.add('on');btn.innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" fill="white"/><rect x="14" y="4" width="4" height="16" fill="white"/></svg>';st.textContent='நேரலை — Live stream';np.classList.add('show');ab.classList.add('show');af.classList.add('pulse');}
+  else{btn.classList.remove('on');btn.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="white"/></svg>';st.textContent='இசைக்க அழுத்துக — Press play';np.classList.remove('show');ab.classList.remove('show');af.classList.remove('pulse');}
+}
+
+// Stripe tier selection
+$('tierGrid').addEventListener('click',e=>{
+  const tc=e.target.closest('.tier-card');if(!tc)return;
+  document.querySelectorAll('.tier-card').forEach(c=>c.classList.remove('sel'));
+  tc.classList.add('sel');selTier={price:tc.dataset.price};
+});
+$('stripePayBtn').onclick=()=>{
+  const btn=$('stripePayBtn');btn.disabled=true;btn.textContent='Stripe க்கு அழைத்துச் செல்கிறோம்…';
+  // ACTION REQUIRED: Replace the URL below with your real Stripe Payment Link
+  // Create one at: https://dashboard.stripe.com/payment-links
+  const STRIPE_PAYMENT_LINK='https://stripe.com'; // ← REPLACE THIS
+  window.open(STRIPE_PAYMENT_LINK,'_blank','noopener');
+  setTimeout(()=>{btn.disabled=false;btn.textContent='Pay Securely with Stripe →';},3000);
+};
+
+// Modals
+function openM(id){$(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeM(id){$(id).classList.remove('open');document.body.style.overflow='';}
+[
+  ['stripeModal','stripeBtn','stripeClose'],
+  ['coffeeModal','coffeeBtn','coffeeClose'],
+  ['legalModal','legalLink','legalClose'],
+  ['disclaimerModal','disclaimerLink','disclaimerClose'],
+  ['privacyModal','privacyLink','privacyClose'],
+].forEach(([mid,openId,closeId])=>{
+  const oel=$(openId);if(oel)oel.addEventListener('click',e=>{e.preventDefault();openM(mid);});
+  const cel=$(closeId);if(cel)cel.onclick=()=>closeM(mid);
+  const ov=$(mid);if(ov)ov.onclick=e=>{if(e.target===ov)closeM(mid);};
+});
+
+// PWA
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPWA=e;
+  $('installBtn').style.display='flex';
+  $('pwaBanner').classList.add('show');
+});
+async function triggerInstall(){
+  if(!deferredPWA)return;
+  deferredPWA.prompt();await deferredPWA.userChoice;
+  deferredPWA=null;$('installBtn').style.display='none';$('pwaBanner').classList.remove('show');
+}
+$('installBtn').onclick=triggerInstall;
+$('pwaInstallBtn').onclick=triggerInstall;
+$('pwaDismissBtn').onclick=()=>$('pwaBanner').classList.remove('show');
+window.addEventListener('appinstalled',()=>{$('pwaBanner').classList.remove('show');$('installBtn').style.display='none';});
+
+// iOS
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+const isSA=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+if(isIOS&&!isSA){
+  const b=$('pwaBanner');
+  b.querySelector('p').innerHTML='<strong>தமிழ் வானொலி</strong> — Tap <strong>Share ↑</strong> then <em>"Add to Home Screen"</em>';
+  b.querySelector('.pwa-acts').innerHTML='<button class="btn-ghost" id="iosD">சரி / Got it</button>';
+  b.classList.add('show');
+  document.getElementById('iosD')?.addEventListener('click',()=>b.classList.remove('show'));
+}
+
+// Service Worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    const sw=`const C='tv-v2';self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll([]))));self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));});`;
+    navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+  });
+}
+
+renderFavs();
+loadFeatured();
+</script>
+</body>
+</html>
